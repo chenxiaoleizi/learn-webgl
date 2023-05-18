@@ -25,6 +25,7 @@ export function createShader(gl, source, type) {
   return shader
 }
 
+// 创建 program
 export function createProgram(gl, vShader, fShader) {
   const program = gl.createProgram()
 
@@ -39,4 +40,15 @@ export function createProgram(gl, vShader, fShader) {
   }
 
   return program
+}
+
+// 设置顶点数据
+export function setPosition(gl, location, vertices) {
+  const buffer = gl.createBuffer()
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+  gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW)
+
+  gl.vertexAttribPointer(location, 3, gl.FLOAT, false, 0, 0)
+  gl.enableVertexAttribArray(location)
 }
