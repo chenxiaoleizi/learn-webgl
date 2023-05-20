@@ -1,5 +1,6 @@
 import path from "path"
 import { defineConfig } from "vite";
+import globalStyle from '@originjs/vite-plugin-global-style';
 
 export default defineConfig(({command, mode, ssrBuild}) => {
 
@@ -11,6 +12,11 @@ export default defineConfig(({command, mode, ssrBuild}) => {
     },
     server: {
       port: 8080
-    }
+    },
+    plugins: [
+      globalStyle({
+        sourcePath: "./src/style/"
+      })
+    ]
   }
 })

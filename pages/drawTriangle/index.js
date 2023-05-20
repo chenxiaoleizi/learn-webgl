@@ -10,7 +10,7 @@ const v = `
 
   void main() {
     gl_Position = a_position;
-    gl_PointSize = 10.0;
+    gl_PointSize = 5.0;
   }
 `
 const f = `
@@ -31,16 +31,23 @@ gl.useProgram(program)
 
 // Position
 const positionLocation = gl.getAttribLocation(program, "a_position")
-const vertices = []
+const vertices = [
+  -0.5, 0.5, 0,
+  -0.4, -0.5, 0,
+  -0.05, 0.5, 0,
+  0.05, -0.5, 0,
+  0.4, 0.5, 0,
+  0.5, -0.5, 0,
+]
 setPosition(gl, positionLocation, new Float32Array(vertices))
 
 const colorLocation = gl.getUniformLocation(program, "u_color")
-gl.uniform4f(colorLocation, 1, 0, 0, 1)
+gl.uniform4f(colorLocation, 0, 153/255, 1, 1)
 
 function draw() {
   gl.clearColor(1, 1, 1, 1)
   gl.clear(gl.COLOR_BUFFER_BIT)
-  gl.drawArrays(settings.mode, 0, 6)
+  gl.drawArrays(gl[settings.mode], 0, 6)
 }
 draw()
 
@@ -55,3 +62,7 @@ gui.add(settings, "mode", [
   "TRIANGLE_STRIP",
   "TRIANGLE_FAN"
 ])
+
+gui.onChange(() => {
+  draw()
+})
