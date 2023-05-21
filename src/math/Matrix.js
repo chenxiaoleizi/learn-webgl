@@ -21,10 +21,6 @@ export class Matrix {
     elements[14] = z
   }
 
-  setScale(x, y, z) {
-
-  }
-
   setRotate(angle) {
     const elements = this.elements
 
