@@ -1,4 +1,4 @@
-import "./style/index.css"
+// import "./style/index.css"
 
 const v = `
   // attribute vec3 a_position;

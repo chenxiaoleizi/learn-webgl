@@ -52,3 +52,14 @@ export function setPosition(gl, location, vertices) {
   gl.vertexAttribPointer(location, 3, gl.FLOAT, false, 0, 0)
   gl.enableVertexAttribArray(location)
 }
+
+// 设置 attribute
+export function setAttribute(gl, location, srcData, size, stride = 0, offset = 0) {
+  const buffer = gl.createBuffer()
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+  gl.bufferData(gl.ARRAY_BUFFER, srcData, gl.STATIC_DRAW)
+
+  gl.vertexAttribPointer(location, size, gl.FLOAT, false, stride, offset)
+  gl.enableVertexAttribArray(location)
+}
