@@ -34,8 +34,8 @@ const colorLocation = gl.getAttribLocation(program, "a_color")
 
 const verticesColors = new Float32Array([
   0, 0.5, 0, 1, 0, 0,
-  -0.5, 0, 0, 0, 1, 0,
-  0.5, 0, 0, 0, 0, 1,
+  -0.5, -0.5, 0, 0, 1, 0,
+  0.5, -0.5, 0, 0, 0, 1,
 ])
 const BYTES_PER_ELEMENT = verticesColors.BYTES_PER_ELEMENT
 
