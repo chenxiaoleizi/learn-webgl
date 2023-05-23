@@ -63,3 +63,54 @@ export function setAttribute(gl, location, srcData, size, stride = 0, offset = 0
   gl.vertexAttribPointer(location, size, gl.FLOAT, false, stride, offset)
   gl.enableVertexAttribArray(location)
 }
+
+// 加载贴图
+export function loadTexture(gl, src) {
+  const texture = gl.createTexture()
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+  gl.activeTexture(gl.TEXTURE0);
+  gl.bindTexture(gl.TEXTURE_2D, texture)
+  const level = 0;
+  const internalFormat = gl.RGBA;
+  const width = 1;
+  const height = 1;
+  const border = 0;
+  const srcFormat = gl.RGBA;
+  const srcType = gl.UNSIGNED_BYTE;
+  const pixel = new Uint8Array([0, 0, 255, 255]); // opaque blue
+  // gl.texImage2D(
+  //   gl.TEXTURE_2D,
+  //   level,
+  //   internalFormat,
+  //   width,
+  //   height,
+  //   border,
+  //   srcFormat,
+  //   srcType,
+  //   pixel
+  // );
+
+  // gl.NEAREST is also allowed, instead of gl.LINEAR, as neither mipmap.
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  // Prevents s-coordinate wrapping (repeating).
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  // Prevents t-coordinate wrapping (repeating).
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+
+  const image = new Image()
+  image.src = src
+
+  return new Promise((resolve) => {
+    image.addEventListener("load", function() {
+      gl.texImage2D(
+        gl.TEXTURE_2D,
+        level,
+        internalFormat,
+        srcFormat,
+        srcType,
+        image
+      );
+      resolve()
+    })
+  })
+}
