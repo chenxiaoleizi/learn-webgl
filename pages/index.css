@@ -1,0 +1,16 @@
+:root {
+  --menuWidth: 300px;
+}
+body {
+  display: flex;
+}
+.menu {
+  width: var(--menuWidth);
+}
+.iframe {
+  width: calc(100% - var(--menuWidth));
+}
+.iframe > iframe {
+  width: 100%;
+  height: 100%;
+}
