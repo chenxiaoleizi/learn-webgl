@@ -55,17 +55,20 @@ const transformLocation = gl.getUniformLocation(program, "u_matrix")
 
 function draw() {
   // Set transform
-  const matrix = new Matrix()
+  const modelMatrix = new Matrix()
   const translateMatrix = new Matrix()
   const scaleMatrix = new Matrix()
+  const rotateMatrix = new Matrix()
 
-  matrix.setRotate((settings.rotateZ * Math.PI) / 180)
   translateMatrix.setPosition(settings.positionX, settings.positionY, settings.positionZ)
   scaleMatrix.setScale(settings.scaleX, settings.scaleY, settings.scaleZ)
-  matrix.multiply(translateMatrix)
-  matrix.multiply(scaleMatrix)
+  rotateMatrix.setRotate((settings.rotateZ * Math.PI) / 180)
 
-  gl.uniformMatrix4fv(transformLocation, false, matrix.elements)
+  modelMatrix.multiply(translateMatrix)
+  modelMatrix.multiply(scaleMatrix)
+  modelMatrix.multiply(rotateMatrix)
+
+  gl.uniformMatrix4fv(transformLocation, false, modelMatrix.elements)
 
   gl.clearColor(1, 1, 1, 1)
   gl.clear(gl.COLOR_BUFFER_BIT)
