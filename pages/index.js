@@ -1,3 +1,5 @@
+import menuData from "./menu.js"
+
 const container = document.querySelector(".menu")
 const iframe = document.querySelector("iframe")
 
@@ -7,6 +9,20 @@ function toggleSubMenu(event) {
   menuItemSub.classList.toggle("is-open")
 
 }
+
+function setIframeSrc(event) {
+  const target = event.target
+
+  const iframeSrc = target.getAttribute("iframe-src")
+  iframe.setAttribute("src", iframeSrc)
+
+  const menuNames = document.querySelectorAll(".menu-item-sub .menu-name")
+  for (const menuName of menuNames) {
+    menuName.classList.remove("menu-selected")
+  }
+  target.classList.add("menu-selected")
+}
+
 function createMenu(container, menuData) {
 
   for (const value of menuData) {
@@ -38,7 +54,11 @@ function createMenu(container, menuData) {
     for (let valueSub of menuDataSub) {
       const menuName = document.createElement("div")
       menuName.className = "menu-name"
-      menuName.innerText = valueSub.name
+
+      const {name, src} = valueSub
+      menuName.innerText = name
+      menuName.setAttribute("iframe-src", src)
+      menuName.addEventListener("click", setIframeSrc)
 
       menuItemSubInner.appendChild(menuName)
     }
@@ -46,30 +66,5 @@ function createMenu(container, menuData) {
 
 }
 
-const menuData = [
-  {
-    name: "基础",
-    children: [
-      {
-        name: "点",
-        src: "./coloredTriangle/index.html"
-      },
-      {
-        name: "线"
-      }
-    ]
-  },
-  {
-    name: "变化",
-    children: [
-      {
-        name: "缩放"
-      },
-      {
-        name: "旋转"
-      }
-    ]
-  }
-]
-
+// Create menu
 createMenu(container, menuData)
