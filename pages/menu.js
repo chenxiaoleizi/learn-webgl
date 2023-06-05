@@ -33,5 +33,18 @@ export default [
         src: "./texture/index.html"
       }
     ]
+  },
+  {
+    name: "三维",
+    children: [
+      {
+        name: "视图矩阵",
+        src: "./viewMatrix/index.html"
+      },
+      {
+        name: "正交投影",
+        src: "./orthographic/index.html"
+      }
+    ]
   }
 ]

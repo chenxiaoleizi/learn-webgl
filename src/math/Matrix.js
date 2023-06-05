@@ -1,3 +1,4 @@
+import { Vec3 } from "./Vec.js"
 export class Matrix {
   elements = []
   constructor() {
@@ -26,7 +27,7 @@ export class Matrix {
 
     elements[0] = Math.cos(angle)
     elements[1] = Math.sin(angle)
-    elements[4] = -Math.sin(angle)
+    elements[4] = +Math.sin(angle)
     elements[5] = Math.cos(angle)
   }
 
@@ -36,6 +37,38 @@ export class Matrix {
     elements[0] = x
     elements[5] = y
     elements[10] = z
+  }
+
+  setView(position, up, lookAt) {
+    const g = Vec3.sub(position, lookAt).normalize()
+    const r = Vec3.cross(g, up).normalize()
+    const t = Vec3.cross(g, r).normalize()
+
+    const elements = this.elements
+
+    elements[0] = r.x, elements[4] = r.y, elements[8] = r.z, elements[12] = -Vec3.dot(r, position)
+    elements[1] = t.x, elements[5] = t.y, elements[9] = t.z, elements[13] = -Vec3.dot(t, position)
+    elements[2] = g.x, elements[6] = g.y, elements[10] = g.z, elements[14] = -Vec3.dot(g, position)
+  }
+
+  setOrthographic(left, right, top, bottom, near, far) {
+    const elements = this.elements
+
+    const a1 = right - left
+    const b1 = top - bottom
+    const c1 = far - near
+
+    const a2 = right + left
+    const b2 = top + bottom
+    const c2 = far + near
+
+    elements[0] = 2 / a1
+    elements[2] = 2 / b1
+    elements[10] = 2 / c1
+
+    elements[13] = - a2 / a1
+    elements[14] = - b2 / b1
+    elements[15] = - c2 / c1
   }
 
   multiply(m) {

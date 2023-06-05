@@ -8,6 +8,18 @@ export class Vec3 {
 
   }
 
+  normalize() {
+    const {x, y, z} = this
+
+    const length = Math.sqrt(x*x + y*y + z*z)
+
+    this.x = x / length
+    this.y = y / length
+    this.z = z / length
+
+    return this
+  }
+
   static add(a, b) {
 
     const x = a.x + b.x
@@ -27,7 +39,7 @@ export class Vec3 {
   static dot(a, b) {
     return a.x*b.x + a.y*b.y + a.z*b.z
   }
-  static cross() {
+  static cross(a, b) {
 
     const ax = a.x, ay = a.y, az = a.z;
 		const bx = b.x, by = b.y, bz = b.z;
