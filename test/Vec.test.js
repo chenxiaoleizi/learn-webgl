@@ -2,6 +2,12 @@ import {test, expect} from "vitest"
 
 import { Vec3 } from "src/math/Vec"
 
+test("Normalize vector", () => {
+  const vec1 = new Vec3(4, 0, 0)
+  const vec2 = new Vec3(1, 0, 0)
+
+  expect(vec1.normalize()).toEqual(vec2)
+})
 
 test("Add vector", () => {
   const vec1 = new Vec3(2, 0, 0)
