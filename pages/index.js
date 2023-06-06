@@ -34,6 +34,7 @@ function createMenu(container, menuData) {
     // 菜单名称
     const menuName = document.createElement("div")
     menuName.className = "menu-name"
+    menuName.setAttribute("toggle", "toggle")
     menuName.innerText = value.name
     menuName.addEventListener("click", toggleSubMenu)
     menuItem.appendChild(menuName)

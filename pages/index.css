@@ -13,6 +13,10 @@ body {
 .menu-item {
   line-height: 30px;
 }
+.menu-name[toggle]::after {
+  content: "▾";
+  display: inline-block;
+}
 .menu-item > .menu-name {
   cursor: pointer;
   padding-left: 10px;
@@ -32,6 +36,7 @@ body {
   color: rgb(0, 153, 255);
 }
 
+/* Toggle transition */
 .menu-item-sub {
   display: grid;
   grid-template-rows: 0fr;
