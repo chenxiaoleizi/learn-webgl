@@ -1,17 +1,35 @@
 :root {
   --menuWidth: 200px;
+  --menuBg: #343131;
+  --menuColor: #d9d9d9;
 }
 
 body {
   display: flex;
 }
 
-.menu {
+.side {
   width: var(--menuWidth);
+  background-color: var(--menuBg);
+  color: var(--menuColor);
   user-select: none;
+  display: flex;
+  flex-direction: column;
+}
+.side-title {
+  flex: 0 0;
+  font-size: 26px;
+  font-weight: bold;
+  line-height: 70px;
+  text-align: center;
+  color: white;
+}
+.menu {
+  flex: 1 1;
 }
 .menu-item {
   line-height: 30px;
+  margin-bottom: 10px;
 }
 .menu-name[toggle]::after {
   content: "▾";
@@ -19,13 +37,13 @@ body {
 }
 .menu-item > .menu-name {
   cursor: pointer;
-  padding-left: 10px;
+  padding-left: 20px;
   font-weight: bold;
 }
 
 .menu-item-sub .menu-name {
   cursor: pointer;
-  padding-left: 20px;
+  padding-left: 30px;
 }
 .menu-item-sub .menu-name:hover {
   background: rgba(0, 153, 255, 0.1);
