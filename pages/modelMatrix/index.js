@@ -12,19 +12,15 @@ const settings = {
   positionZ: 0,
   scaleX: 1,
   scaleY: 1,
-  scaleZ: 1,
-  cameraPositionX: 0,
-  cameraPositionY: 0,
-  cameraPositionZ: 0.4,
+  scaleZ: 1
 }
 
 const v = `
   attribute vec4 a_position;
-  uniform mat4 u_viewMatrix;
   uniform mat4 u_modelMatrix;
 
   void main() {
-    gl_Position = u_viewMatrix * u_modelMatrix * a_position;
+    gl_Position = u_modelMatrix * a_position;
   }
 `
 const f = `
@@ -98,9 +94,6 @@ gl.uniform4f(colorLocation, 0, 153/255, 1, 1)
 // Model matrix
 const modelMatrixLocation = gl.getUniformLocation(program, "u_modelMatrix")
 
-// View matrix
-const viewMatrixLocation = gl.getUniformLocation(program, "u_viewMatrix")
-
 function draw() {
   // Set model matrix
   const modelMatrix = new Matrix()
@@ -123,12 +116,6 @@ function draw() {
   modelMatrix.multiply(rotateMatrixX)
 
   gl.uniformMatrix4fv(modelMatrixLocation, false, modelMatrix.elements)
-
-  // Set view matrix
-  const viewMatrix = new Matrix()
-  const cameraPosition = new Vec3(settings.cameraPositionX, settings.cameraPositionY, settings.cameraPositionZ)
-  viewMatrix.setView(cameraPosition, new Vec3(0, 1, 0), new Vec3(0, 0, 0))
-  gl.uniformMatrix4fv(viewMatrixLocation, false, viewMatrix.elements)
 
   gl.clearColor(1, 1, 1, 1)
   gl.clear(gl.COLOR_BUFFER_BIT)
@@ -153,11 +140,6 @@ const scale = gui.addFolder("Scale")
 scale.add(settings, "scaleX").min(0).max(10)
 scale.add(settings, "scaleY").min(0).max(10)
 scale.add(settings, "scaleZ").min(0).max(10)
-
-const cameraPosition = gui.addFolder("Camera position")
-cameraPosition.add(settings, "cameraPositionX").min(-1).max(1)
-cameraPosition.add(settings, "cameraPositionY").min(-1).max(1)
-cameraPosition.add(settings, "cameraPositionZ").min(-1).max(1)
 
 gui.onChange(() => {
   draw()

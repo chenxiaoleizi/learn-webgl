@@ -22,12 +22,30 @@ export class Matrix {
     elements[14] = z
   }
 
-  setRotate(angle) {
+  setRotateX(angle) {
+    const elements = this.elements
+
+    elements[5] = Math.cos(angle)
+    elements[6] = Math.sin(angle)
+    elements[9] = -Math.sin(angle)
+    elements[10] = Math.cos(angle)
+  }
+
+  setRotateY(angle) {
+    const elements = this.elements
+
+    elements[0] = Math.cos(angle)
+    elements[2] = -Math.sin(angle)
+    elements[8] = Math.sin(angle)
+    elements[10] = Math.cos(angle)
+  }
+
+  setRotateZ(angle) {
     const elements = this.elements
 
     elements[0] = Math.cos(angle)
     elements[1] = Math.sin(angle)
-    elements[4] = +Math.sin(angle)
+    elements[4] = -Math.sin(angle)
     elements[5] = Math.cos(angle)
   }
 
@@ -41,7 +59,7 @@ export class Matrix {
 
   setView(position, up, lookAt) {
     const g = Vec3.sub(position, lookAt).normalize()
-    const r = Vec3.cross(g, up).normalize()
+    const r = Vec3.cross(up, g).normalize()
     const t = Vec3.cross(g, r).normalize()
 
     const elements = this.elements

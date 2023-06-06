@@ -38,6 +38,10 @@ export default [
     name: "三维",
     children: [
       {
+        name: "模型矩阵",
+        src: "./modelMatrix/index.html"
+      },
+      {
         name: "视图矩阵",
         src: "./viewMatrix/index.html"
       },
