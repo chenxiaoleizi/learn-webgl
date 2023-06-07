@@ -1,5 +1,5 @@
 import GUI from 'lil-gui';
-import {getGl, createShader, createProgram, setPosition} from "@/core/index.js"
+import {getGl, createShader, createProgram, setPosition, setAttribute} from "@/core/index.js"
 import {Vec3} from "@/math/Vec.js"
 import {Matrix} from "@/math/Matrix.js"
 
@@ -19,21 +19,25 @@ const settings = {
 }
 
 const v = `
+  precision mediump float;
   attribute vec4 a_position;
-  uniform mat4 u_viewMatrix;
+  attribute vec4 a_color;
   uniform mat4 u_modelMatrix;
+  uniform mat4 u_viewMatrix;
+
+  varying vec4 v_color;
 
   void main() {
     gl_Position = u_viewMatrix * u_modelMatrix * a_position;
+    v_color = a_color;
   }
 `
 const f = `
   precision mediump float;
-
-  uniform vec4 u_color;
+  varying vec4 v_color;
 
   void main() {
-    gl_FragColor = u_color;
+    gl_FragColor = v_color;
   }
 `
 
@@ -50,16 +54,16 @@ const vertices = [
   -0.5, -0.5, 0.5,
   0.5, -0.5, 0.5,
   0.5, 0.5, 0.5,
-  -0.5, 0.5, 0.5,
+  0.5, 0.5, 0.5,
   -0.5, 0.5, 0.5,
   -0.5, -0.5, 0.5,
   // Back
   0.5, -0.5, -0.5,
-  -0.5, -0.5, -0.5,
-  -0.5, 0.5, -0.5,
-  -0.5, 0.5, -0.5,
   0.5, 0.5, -0.5,
-  0.5, -0.5, -0.5,
+  -0.5, -0.5, -0.5,
+  0.5, 0.5, -0.5,
+  -0.5, 0.5, -0.5,
+  -0.5, -0.5, -0.5,
   // Left
   -0.5, -0.5, -0.5,
   -0.5, -0.5, 0.5,
@@ -92,8 +96,53 @@ const vertices = [
 setPosition(gl, positionLocation, new Float32Array(vertices))
 
 // Color
-const colorLocation = gl.getUniformLocation(program, "u_color")
-gl.uniform4f(colorLocation, 0, 153/255, 1, 1)
+const colorLocation = gl.getAttribLocation(program, "a_color")
+let colors = [
+  // Front
+  255, 184, 76,
+  255, 184, 76,
+  255, 184, 76,
+  255, 184, 76,
+  255, 184, 76,
+  255, 184, 76,
+  // Back
+  242, 102, 171,
+  242, 102, 171,
+  242, 102, 171,
+  242, 102, 171,
+  242, 102, 171,
+  242, 102, 171,
+  // Left
+  164, 89, 209,
+  164, 89, 209,
+  164, 89, 209,
+  164, 89, 209,
+  164, 89, 209,
+  164, 89, 209,
+  // Right
+  44, 211, 225,
+  44, 211, 225,
+  44, 211, 225,
+  44, 211, 225,
+  44, 211, 225,
+  44, 211, 225,
+  // Top
+  17, 0, 158,
+  17, 0, 158,
+  17, 0, 158,
+  17, 0, 158,
+  17, 0, 158,
+  17, 0, 158,
+  // Bottom
+  27, 156, 133,
+  27, 156, 133,
+  27, 156, 133,
+  27, 156, 133,
+  27, 156, 133,
+  27, 156, 133,
+]
+colors = colors.map(item => item / 255)
+setAttribute(gl, colorLocation, new Float32Array(colors), 3)
 
 // Model matrix
 const modelMatrixLocation = gl.getUniformLocation(program, "u_modelMatrix")
@@ -130,8 +179,9 @@ function draw() {
   viewMatrix.setView(cameraPosition, new Vec3(0, 1, 0), new Vec3(0, 0, 0))
   gl.uniformMatrix4fv(viewMatrixLocation, false, viewMatrix.elements)
 
+  gl.enable(gl.DEPTH_TEST)
   gl.clearColor(1, 1, 1, 1)
-  gl.clear(gl.COLOR_BUFFER_BIT)
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
   gl.drawArrays(gl.TRIANGLES, 0, 6 * 6)
 }
 draw()

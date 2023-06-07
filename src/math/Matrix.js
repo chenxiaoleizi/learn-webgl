@@ -58,15 +58,15 @@ export class Matrix {
   }
 
   setView(position, up, lookAt) {
-    const g = Vec3.sub(position, lookAt).normalize()
-    const r = Vec3.cross(up, g).normalize()
-    const t = Vec3.cross(g, r).normalize()
+    const g = Vec3.sub(lookAt, position).normalize()
+    const r = Vec3.cross(g, up).normalize()
+    const t = Vec3.cross(r, g).normalize()
 
     const elements = this.elements
 
     elements[0] = r.x, elements[4] = r.y, elements[8] = r.z, elements[12] = -Vec3.dot(r, position)
     elements[1] = t.x, elements[5] = t.y, elements[9] = t.z, elements[13] = -Vec3.dot(t, position)
-    elements[2] = g.x, elements[6] = g.y, elements[10] = g.z, elements[14] = -Vec3.dot(g, position)
+    elements[2] = -g.x, elements[6] = -g.y, elements[10] = -g.z, elements[14] = Vec3.dot(g, position)
   }
 
   setOrthographic(left, right, top, bottom, near, far) {
