@@ -39,11 +39,13 @@ body {
   cursor: pointer;
   padding-left: 20px;
   font-weight: bold;
+  font-size: 16px;
 }
 
 .menu-item-sub .menu-name {
   cursor: pointer;
   padding-left: 30px;
+  font-size: 14px;
 }
 .menu-item-sub .menu-name:hover {
   background: rgba(0, 153, 255, 0.1);

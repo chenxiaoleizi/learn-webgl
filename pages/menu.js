@@ -42,6 +42,10 @@ export default [
         src: "./modelMatrix/index.html"
       },
       {
+        name: "彩色立方体",
+        src: "./coloredCube/index.html"
+      },
+      {
         name: "视图矩阵",
         src: "./viewMatrix/index.html"
       },
