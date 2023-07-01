@@ -81,12 +81,14 @@ export class Matrix {
     const c2 = far + near
 
     elements[0] = 2 / a1
-    elements[2] = 2 / b1
+    elements[5] = 2 / b1
     elements[10] = 2 / c1
 
-    elements[13] = - a2 / a1
-    elements[14] = - b2 / b1
-    elements[15] = - c2 / c1
+    elements[12] = - a2 / a1
+    elements[13] = - b2 / b1
+    elements[14] = - c2 / c1
+
+    console.log(elements)
   }
 
   multiply(m) {

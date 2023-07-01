@@ -24,11 +24,12 @@ const v = `
   attribute vec4 a_color;
   uniform mat4 u_modelMatrix;
   uniform mat4 u_viewMatrix;
+  uniform mat4 u_projectionMatrix;
 
   varying vec4 v_color;
 
   void main() {
-    gl_Position = u_viewMatrix * u_modelMatrix * a_position;
+    gl_Position = u_projectionMatrix * u_viewMatrix * u_modelMatrix * a_position;
     v_color = a_color;
   }
 `
@@ -150,6 +151,8 @@ const modelMatrixLocation = gl.getUniformLocation(program, "u_modelMatrix")
 // View matrix
 const viewMatrixLocation = gl.getUniformLocation(program, "u_viewMatrix")
 
+const projectionMatrixLocation = gl.getUniformLocation(program, "u_projectionMatrix")
+
 function draw() {
   // Set model matrix
   const modelMatrix = new Matrix()
@@ -178,6 +181,11 @@ function draw() {
   const cameraPosition = new Vec3(settings.cameraPositionX, settings.cameraPositionY, settings.cameraPositionZ)
   viewMatrix.setView(cameraPosition, new Vec3(0, 1, 0), new Vec3(0, 0, 0))
   gl.uniformMatrix4fv(viewMatrixLocation, false, viewMatrix.elements)
+
+  // Set projection matrix
+  const projectionMatrix = new Matrix()
+  projectionMatrix.setOrthographic(-1, 1, 1, -1, 1, -1)
+  gl.uniformMatrix4fv(projectionMatrixLocation, false, projectionMatrix.elements)
 
   gl.enable(gl.DEPTH_TEST)
   gl.clearColor(1, 1, 1, 1)

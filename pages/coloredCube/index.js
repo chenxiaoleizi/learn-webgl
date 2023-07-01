@@ -158,11 +158,11 @@ function draw() {
   rotateMatrixZ.setRotateZ((settings.rotateZ * Math.PI) / 180)
 
   modelMatrix.multiply(translateMatrix)
-  modelMatrix.multiply(scaleMatrix)
-  modelMatrix.multiply(rotateMatrixZ)
-  modelMatrix.multiply(rotateMatrixY)
   modelMatrix.multiply(rotateMatrixX)
-
+  modelMatrix.multiply(rotateMatrixY)
+  modelMatrix.multiply(rotateMatrixZ)
+  modelMatrix.multiply(scaleMatrix)
+  console.log(rotateMatrixX)
   gl.uniformMatrix4fv(modelMatrixLocation, false, modelMatrix.elements)
 
   gl.enable(gl.DEPTH_TEST)
