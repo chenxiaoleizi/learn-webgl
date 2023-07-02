@@ -1,7 +1,7 @@
 export function getGl(canvasId = "#canvas-elem") {
   const canvasElem = document.querySelector(canvasId)
-  canvasElem.width = window.innerWidth
-  canvasElem.height = window.innerHeight
+  canvasElem.width = 500
+  canvasElem.height = 500
   
   const gl = canvasElem.getContext("webgl")
 

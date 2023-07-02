@@ -184,7 +184,7 @@ function draw() {
 
   // Set projection matrix
   const projectionMatrix = new Matrix()
-  projectionMatrix.setPerspective(45, window.innerWidth/window.innerHeight, 1, 10)
+  projectionMatrix.setPerspective(45, 1, 1, 10)
   gl.uniformMatrix4fv(projectionMatrixLocation, false, projectionMatrix.elements)
 
   gl.enable(gl.DEPTH_TEST)
@@ -198,9 +198,9 @@ draw()
 const gui = new GUI()
 
 const rotate = gui.addFolder("Rotate")
-rotate.add(settings, "rotateX").min(0).max(360)
-rotate.add(settings, "rotateY").min(0).max(360)
-rotate.add(settings, "rotateZ").min(0).max(360)
+rotate.add(settings, "rotateX").min(-360).max(360)
+rotate.add(settings, "rotateY").min(-360).max(360)
+rotate.add(settings, "rotateZ").min(-360).max(360)
 
 const position = gui.addFolder("Position")
 position.add(settings, "positionX").min(-1).max(1).step(0.01)
