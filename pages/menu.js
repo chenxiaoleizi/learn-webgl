@@ -52,7 +52,11 @@ export default [
       {
         name: "正交投影",
         src: "./orthographic/index.html"
-      }
+      },
+      {
+        name: "透视投影",
+        src: "./perspective/index.html"
+      },
     ]
   }
 ]

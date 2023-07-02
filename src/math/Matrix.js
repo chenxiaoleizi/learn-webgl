@@ -87,8 +87,19 @@ export class Matrix {
     elements[12] = - a2 / a1
     elements[13] = - b2 / b1
     elements[14] = - c2 / c1
+  }
 
-    console.log(elements)
+  setPerspective(fov, aspect, near, far) {
+    const elements = this.elements
+
+    fov = Math.PI * fov / 180
+    const tanFov = Math.tan(fov / 2)
+
+    elements[0] = 1 / (aspect * tanFov)
+    elements[5] = 1 / tanFov
+    elements[10] = - (far - near) / (far + near)
+    elements[11] = - 1
+    elements[11] = -2 * far * near / (far + near)
   }
 
   multiply(m) {
