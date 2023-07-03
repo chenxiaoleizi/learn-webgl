@@ -57,6 +57,10 @@ export default [
         name: "透视投影",
         src: "./perspective/index.html"
       },
+      {
+        name: "不同贴图的立方体",
+        src: "./differentTextureCube/index.html"
+      },
     ]
   }
 ]
