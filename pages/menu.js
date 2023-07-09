@@ -62,5 +62,14 @@ export default [
         src: "./differentTextureCube/index.html"
       },
     ]
-  }
+  },
+  {
+    name: "灯光",
+    children: [
+      {
+        name: "平行光",
+        src: "./light/directionalLight/index.html"
+      }
+    ]
+  },
 ]
