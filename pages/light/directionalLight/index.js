@@ -16,9 +16,9 @@ const settings = {
   cameraPositionX: 1,
   cameraPositionY: 1,
   cameraPositionZ: 1,
-  lightDirectionX: 1,
-  lightDirectionY: 0.5,
-  lightDirectionZ: 0,
+  lightDirectionX: -0.5,
+  lightDirectionY: -0.7,
+  lightDirectionZ: -1,
 }
 
 const v = `
@@ -48,7 +48,7 @@ const f = `
   void main() {
     vec3 lightColor = vec3(1.0, 1.0, 1.0);
     vec3 cubeColor = vec3(1.0, 1.0, 0.0);
-    vec3 color = lightColor * cubeColor * dot(u_lightDirection, v_normal);
+    vec3 color = lightColor * cubeColor * dot(v_normal, normalize(u_lightDirection));
     gl_FragColor = vec4(color, 1.0);
   }
 `
@@ -203,10 +203,13 @@ function draw() {
   gl.uniformMatrix4fv(projectionMatrixLocation, false, projectionMatrix.elements)
 
   // Set light direction
-  gl.uniform3fv(lightDirectionLocation, [settings.lightDirectionX, settings.lightDirectionY, settings.lightDirectionZ])
+  const lightDirection = new Vec3(settings.lightDirectionX, settings.lightDirectionY, settings.lightDirectionZ)
+  lightDirection.invert()
+  // lightDirection.normalize()
+  gl.uniform3fv(lightDirectionLocation, [lightDirection.x, lightDirection.y, lightDirection.z])
 
   gl.enable(gl.DEPTH_TEST)
-  gl.clearColor(1, 1, 1, 1)
+  gl.clearColor(0, 0, 0, 1)
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
   gl.drawArrays(gl.TRIANGLES, 0, 6 * 6)
 }
@@ -236,9 +239,9 @@ cameraPosition.add(settings, "cameraPositionY").min(-10).max(10)
 cameraPosition.add(settings, "cameraPositionZ").min(-10).max(10)
 
 const lightDirection = gui.addFolder("Light position")
-lightDirection.add(settings, "lightDirectionX").min(-10).max(10)
-lightDirection.add(settings, "lightDirectionY").min(-10).max(10)
-lightDirection.add(settings, "lightDirectionZ").min(-10).max(10)
+lightDirection.add(settings, "lightDirectionX").min(-1).max(1)
+lightDirection.add(settings, "lightDirectionY").min(-1).max(1)
+lightDirection.add(settings, "lightDirectionZ").min(-1).max(1)
 
 gui.onChange(() => {
   draw()

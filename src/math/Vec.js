@@ -20,6 +20,14 @@ export class Vec3 {
     return this
   }
 
+  invert() {
+    const {x, y, z} = this
+
+    this.x = -x
+    this.y = -y
+    this.z = -z
+  }
+
   static add(a, b) {
 
     const x = a.x + b.x
