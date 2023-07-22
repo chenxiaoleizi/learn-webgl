@@ -62,7 +62,9 @@ function draw() {
 
   translateMatrix.setPosition(settings.positionX, settings.positionY, settings.positionZ)
   scaleMatrix.setScale(settings.scaleX, settings.scaleY, settings.scaleZ)
-  rotateMatrix.setRotate((settings.rotateZ * Math.PI) / 180)
+  rotateMatrix.setRotateX((settings.rotateX * Math.PI) / 180)
+  rotateMatrix.setRotateY((settings.rotateY * Math.PI) / 180)
+  rotateMatrix.setRotateZ((settings.rotateZ * Math.PI) / 180)
 
   modelMatrix.multiply(translateMatrix)
   modelMatrix.multiply(scaleMatrix)
@@ -80,19 +82,19 @@ draw()
 const gui = new GUI()
 
 const rotate = gui.addFolder("Rotate")
-// rotate.add(settings, "rotateX").min(0).max(360)
-// rotate.add(settings, "rotateY").min(0).max(360)
+rotate.add(settings, "rotateX").min(0).max(360)
+rotate.add(settings, "rotateY").min(0).max(360)
 rotate.add(settings, "rotateZ").min(0).max(360)
 
 const position = gui.addFolder("Position")
 position.add(settings, "positionX").min(-1).max(1).step(0.01)
 position.add(settings, "positionY").min(-1).max(1).step(0.01)
-// position.add(settings, "positionZ").min(-1).max(1).step(0.01)
+position.add(settings, "positionZ").min(-1).max(1).step(0.01)
 
 const scale = gui.addFolder("Scale")
 scale.add(settings, "scaleX").min(0).max(10)
 scale.add(settings, "scaleY").min(0).max(10)
-// scale.add(settings, "scaleZ").min(0).max(10)
+scale.add(settings, "scaleZ").min(0).max(10)
 
 gui.onChange(() => {
   draw()

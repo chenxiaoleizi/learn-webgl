@@ -36,8 +36,8 @@ export default [
         src: "./transform/rotate/index.html"
       },
       {
-        name: "变换",
-        src: "./transform/transform/index.html"
+        name: "组合变换",
+        src: "./transform/compositeTransform/index.html"
       }
     ]
   },
