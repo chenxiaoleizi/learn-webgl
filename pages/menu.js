@@ -4,15 +4,19 @@ export default [
     children: [
       {
         name: "绘制单个点",
-        src: "./drawPoint/index.html"
+        src: "./basics/drawPoint/index.html"
       },
       {
         name: "绘制多个点",
-        src: "./drawPoints/index.html"
+        src: "./basics/drawPoints/index.html"
       },
       {
         name: "绘制三角形",
-        src: "./drawTriangle/index.html"
+        src: "./basics/drawTriangle/index.html"
+      },
+      {
+        name: "彩色三角形",
+        src: "./basics/coloredTriangle/index.html"
       }
     ]
   },
@@ -21,7 +25,7 @@ export default [
     children: [
       {
         name: "变换",
-        src: "./transform/index.html"
+        src: "./transform/transform/index.html"
       }
     ]
   },
@@ -39,27 +43,27 @@ export default [
     children: [
       {
         name: "模型矩阵",
-        src: "./modelMatrix/index.html"
+        src: "./3d/modelMatrix/index.html"
       },
       {
         name: "彩色立方体",
-        src: "./coloredCube/index.html"
+        src: "./3d/coloredCube/index.html"
       },
       {
         name: "视图矩阵",
-        src: "./viewMatrix/index.html"
+        src: "./3d/viewMatrix/index.html"
       },
       {
         name: "正交投影",
-        src: "./orthographic/index.html"
+        src: "./3d/orthographic/index.html"
       },
       {
         name: "透视投影",
-        src: "./perspective/index.html"
+        src: "./3d/perspective/index.html"
       },
       {
         name: "不同贴图的立方体",
-        src: "./differentTextureCube/index.html"
+        src: "./3d/differentTextureCube/index.html"
       },
     ]
   },
