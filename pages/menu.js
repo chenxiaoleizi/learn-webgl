@@ -69,6 +69,10 @@ export default [
       {
         name: "平行光",
         src: "./light/directionalLight/index.html"
+      },
+      {
+        name: "点光源",
+        src: "./light/pointLight/index.html"
       }
     ]
   },

@@ -16,9 +16,9 @@ const settings = {
   cameraPositionX: 1,
   cameraPositionY: 1,
   cameraPositionZ: 1,
-  lightDirectionX: -0.5,
-  lightDirectionY: -0.7,
-  lightDirectionZ: -1,
+  lightPositionX: 2,
+  lightPositionY: 2,
+  lightPositionZ: 2,
 }
 
 const v = `
@@ -33,22 +33,27 @@ const v = `
 
 
   varying vec3 v_normal;
+  varying vec4 v_position;
 
   void main() {
     gl_Position = u_projectionMatrix * u_viewMatrix * u_modelMatrix * a_position;
     v_normal = a_normal;
+    v_position = u_modelMatrix * a_position;
   }
 `
 const f = `
   precision mediump float;
 
-  uniform vec3 u_lightDirection;
+  uniform vec3 u_lightPosition;
+
   varying vec3 v_normal;
+  varying vec4 v_position;
 
   void main() {
     vec3 lightColor = vec3(1.0, 1.0, 1.0);
     vec3 cubeColor = vec3(1.0, 1.0, 0.0);
-    vec3 color = lightColor * cubeColor * dot(v_normal, normalize(u_lightDirection));
+    vec3 lightDirection = normalize(u_lightPosition - vec3(v_position));
+    vec3 color = lightColor * cubeColor * dot(v_normal, lightDirection);
     gl_FragColor = vec4(color, 1.0);
   }
 `
@@ -166,7 +171,7 @@ const viewMatrixLocation = gl.getUniformLocation(program, "u_viewMatrix")
 const projectionMatrixLocation = gl.getUniformLocation(program, "u_projectionMatrix")
 
 // Light direction
-const lightDirectionLocation = gl.getUniformLocation(program, "u_lightDirection")
+const lightPositionLocation = gl.getUniformLocation(program, "u_lightPosition")
 
 function draw() {
   // Set model matrix
@@ -203,9 +208,8 @@ function draw() {
   gl.uniformMatrix4fv(projectionMatrixLocation, false, projectionMatrix.elements)
 
   // Set light direction
-  const lightDirection = new Vec3(settings.lightDirectionX, settings.lightDirectionY, settings.lightDirectionZ)
-  lightDirection.invert()
-  gl.uniform3fv(lightDirectionLocation, [lightDirection.x, lightDirection.y, lightDirection.z])
+  const lightPosition = new Vec3(settings.lightPositionX, settings.lightPositionY, settings.lightPositionZ)
+  gl.uniform3fv(lightPositionLocation, [lightPosition.x, lightPosition.y, lightPosition.z])
 
   gl.enable(gl.DEPTH_TEST)
   gl.clearColor(0, 0, 0, 1)
@@ -237,10 +241,10 @@ cameraPosition.add(settings, "cameraPositionX").min(-10).max(10)
 cameraPosition.add(settings, "cameraPositionY").min(-10).max(10)
 cameraPosition.add(settings, "cameraPositionZ").min(-10).max(10)
 
-const lightDirection = gui.addFolder("Light direction")
-lightDirection.add(settings, "lightDirectionX").min(-1).max(1)
-lightDirection.add(settings, "lightDirectionY").min(-1).max(1)
-lightDirection.add(settings, "lightDirectionZ").min(-1).max(1)
+const lightPosition = gui.addFolder("Light position")
+lightPosition.add(settings, "lightPositionX").min(-5).max(5)
+lightPosition.add(settings, "lightPositionY").min(-5).max(5)
+lightPosition.add(settings, "lightPositionZ").min(-5).max(5)
 
 gui.onChange(() => {
   draw()
