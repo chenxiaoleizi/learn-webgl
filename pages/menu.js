@@ -45,8 +45,8 @@ export default [
     name: "贴图",
     children: [
       {
-        name: "绘制贴图",
-        src: "./texture/index.html"
+        name: "基础贴图",
+        src: "./texture/basic/index.html"
       }
     ]
   },
