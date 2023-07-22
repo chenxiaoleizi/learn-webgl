@@ -11,8 +11,8 @@ export default [
         src: "./basics/drawPoints/index.html"
       },
       {
-        name: "绘制三角形",
-        src: "./basics/drawTriangle/index.html"
+        name: "绘制模式",
+        src: "./basics/drawMode/index.html"
       },
       {
         name: "彩色三角形",
@@ -23,6 +23,18 @@ export default [
   {
     name: "变换",
     children: [
+      {
+        name: "移动",
+        src: "./transform/translate/index.html"
+      },
+      {
+        name: "缩放",
+        src: "./transform/scale/index.html"
+      },
+      {
+        name: "旋转",
+        src: "./transform/rotate/index.html"
+      },
       {
         name: "变换",
         src: "./transform/transform/index.html"
