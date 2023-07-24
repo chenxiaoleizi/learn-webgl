@@ -83,6 +83,10 @@ export default [
     name: "灯光",
     children: [
       {
+        name: "环境光",
+        src: "./light/ambientLight/index.html"
+      },
+      {
         name: "平行光",
         src: "./light/directionalLight/index.html"
       },
