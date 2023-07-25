@@ -93,6 +93,10 @@ export default [
       {
         name: "点光源",
         src: "./light/pointLight/index.html"
+      },
+      {
+        name: "组合灯光",
+        src: "./light/combineLight/index.html"
       }
     ]
   },
